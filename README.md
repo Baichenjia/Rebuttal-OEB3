@@ -2,13 +2,29 @@
 
 We thank the reviewers for their comprehensive and thoughtful comments. We carefully revised our submission based on the reviews, and hope the revisions address the reviewers' concerns.
 
-In the updated manuscript we have made the following changes:
-- We added the detailed discussion of the difference between OEB3 and Chen et al (2017), EBU (Lee et. al. 2019)
-- We specified on each of our methods whether they use the ground-truth labels or the predicted labels. We also included the rationale behind these assumptions more clearly. (Section 3.2, 3.5, 3.6)
-- We added a more detailed explanation of our safe spot-aware training method. (Section 3.5)
-- We tuned the learning rate for safe spot search on OOD detection and updated our OOD results (Section 4.4).
+In the updated manuscript we have made the following main changes:
+- We added the detailed discussion of the difference between OEB3 and Chen et al (2017) in Related Works (Section 4).
+- We added the discussion of adjustments in OEB3 compared to optimistic-LSVI (Jin et al, 2020) (Section 3.2).
+- We added the comparison of OEB3 and EBU (Lee et al, 2019) (Section 3.2).
+- We added theoretical and empirical comparison of Uncertainty Bellman Equation and Exploration (O'Donoghue et al. 2018) and Bayesian-DQN (Azizzadenesheli et al.  2018) (Section 4 and Section 5.2).
+- We added the related works of model-based approaches1 with optimism. (Section 4).
+- We added additional algorithmic descriptions for three baselines (i.e., BEBU, BEBU-UCB, and BEBU-IDS). (Appendix B).
+
+**References**
+
+[Chen et al. 2017] Richard Y Chen,  Szymon Sidor,  Pieter Abbeel,  and John Schulman.   UCB Exploration via164Q-Ensembles. arXiv preprint arXiv:1706.01502, 2017
+
+[Jin et al.  2020] Chi Jin, Zhuoran Yang, Zhaoran Wang, and Michael I Jordan.  Provably Efficient Reinforcement178Learning with Linear Function Approximation. In Proceedings of Thirty Third Conference on Learning Theory. 2020
+
+[Lee et al. 2019] Su Young Lee, Choi Sungik, and Sae-Young Chung. Sample-Efficient Deep Reinforcement Learning166via Episodic Backward Update. Advances in Neural Information Processing Systems, 2019
+
+[O’Donoghue et al. 2018] Brendan O’Donoghue, Ian Osband, Remi Munos and V. Mnih. The Uncertainty Bellman168Equation and Exploration. International Conference of Machine Learning. 2018
+
+[Azizzadenesheli et al. 2018] Kamyar Azizzadenesheli, Emma Brunskill, and Anima Anandkumar. Efficient Exploration170through Bayesian Deep Q-Networks. Information Theory and Applications Workshop (ITA). 2018
 
 ---
+
+# Reply to AnonReviewer 5
 
 We appreciate the valuable suggestions and typos spotted by the reviewers. We have revised our work accordingly. We refer to table for a summary of comparisons in our rebuttal. In what follows, we address the concerns in detail.
 
@@ -31,7 +47,7 @@ Bayesian-DQN (Azizzadenesheli et al. 2018) | Closed form     | On-trajectory upd
 - The method proposed by Chen et al. (2017) does not propagate the uncertainty through time. In contrast, our approach propagates the uncertainty through time by the backward update, which allows for deep exploration for the MDPs. 
 - The method proposed by Chen et al. (2017) does not use the bonus in the update of Q-functions. The bonus is computed when taking the actions. In contrast, we compute the UCB-bonus for the update of Q-function instead of action selection. Hence, our algorithm is more computationally efficient, as the number of steps $L_1$ in exploration is typically larger than the number of steps $L_2$ for the update of Q-functions. (e.g., in our experiments, we set $L_1 > 4L_2$). 
 - As a result of the above reasons, our proposed OEB3 outperforms Chen et al. (2017) with BEBU evaluated by 49 Atari games. 
-- In addition, our work establishes a theoretical connection between the proposed UCB-bonus $\rm{std}(Q)$ and the bonus-term $[\phi_t^\top\Lambda_t^{-1}\phi_t]^{\frac{1}{2}}$ in optimistic-LSVI that achieves a near-optimal worst-case regret, which motivates the design of OEB3.
+- In addition, our work establishes a theoretical connection between the proposed UCB-bonus $\rm{std}(Q)$ and the bonus-term $[\phi_t^\top\Lambda_t^{-1}\phi_t]^{\frac{1}{2}}$ in optimistic-LSVI that achieves a near-optimal worst-case regret, which motivates the design of OEB3. We revised the manuscript to add this discussion in Section 4.
 
 > The informal Theorem 1 I think are well known in that the bonus used by UCB algorithms for linear regression is proportional to the posterior variance of bayesian linear regression. Further, LSVI-UCB is a frequentist solution approach and bootstrap DQN a non-parametric Bayesian approach — combining the two definitely warrants some discussion.
 
@@ -45,7 +61,7 @@ In addition, we highlight that Bootstrapped DQN is a non-parametric bootstrapped
 
 (3) We remark that BEBU is the combination of EBU and Bootstrapped DQN. Meanwhile, our proposed OEB3 is BEBU with the bonus propagated in the backward update. We remark that although the backward update is scarcely studied in empirical work (EBU is the only work as far as we are concerned), such an approach is a standard approach in the theoretical analysis of sample efficient reinforcement learning and deserves more empirical investigation. Also, we remark that EBU is essentially Optimistic LSVI without the bonus added. The main difference between Optimistic LSVI and OEB3 is that the bonus in OEB3 is estimated by Bootstrapped DQN to suit the neural network parameterization.
 
-In addition, we highlight that our contribution also includes the extension of backward update from ordinary $Q$-learning to bootstrapped DQN empirically. The implementation of BEBU in our work is different from EBU and Bootstrapped DQN in several aspects.  (a) BEBU requires extra tensors to store the UCB-bonus for immediate reward and next-$Q$ value, which are integrated into training to propagate uncertainties. (b) Integrating uncertainty into BEBU needs special design in training. Since $Q^k$ in $t$-th step is updated optimistically at the state-action pair $(s_{t+1}, a_{t+1})$ during the backward update, we introduce the mask $1_{a'\neq a_{t+1}}$ to ignore the bonus of next-$Q$ value in the update of $Q^k$ when $a'$ is equal to $a_{t+1}$.
+In addition, we highlight that our contribution also includes the extension of backward update from ordinary $Q$-learning to bootstrapped DQN empirically. The implementation of BEBU in our work is different from EBU and Bootstrapped DQN in several aspects.  (a) BEBU requires extra tensors to store the UCB-bonus for immediate reward and next-$Q$ value, which are integrated into training to propagate uncertainties. (b) Integrating uncertainty into BEBU needs special design in training. Since $Q^k$ in $t$-th step is updated optimistically at the state-action pair $(s_{t+1}, a_{t+1})$ during the backward update, we introduce the mask $1_{a'\neq a_{t+1}}$ to ignore the bonus of next-$Q$ value in the update of $Q^k$ when $a'$ is equal to $a_{t+1}$. We revised the manuscript to add this discussion in Section 3.2.
 
 > Further, “faithfully follows the backward update of optimistic LSVI” may be a stretch as the optimistic LSVI bootstrap estimates are post learning at every step of backward induction.
 
@@ -153,11 +169,14 @@ In figure 2, we use a trained OEB3 agent to interact with the environment for an
 
 [Kiran et al. 2020] Kiran, B. R., Sobh, I., Talpaert, V., Mannion, P., Sallab, A. A. A., Yogamani, S., Pérez, P. Deep reinforcement learning for autonomous driving: A survey. arXiv preprint arXiv:2002.00444. 2020
 
-# Reply to AnonReviewer 2, Part 1/2
+---
+
+# Reply to AnonReviewer 2
 
 We appreciate the valuable review and suggestions. In what follows, we address the concerns in detail.
 
-## 1. Related model-based methods
+**1. Related model-based methods**
+
 > There exist other recent works that introduce similar ideas (bringing in bonuses for the future uncertainty as opposed to solely penalizing immediate ) are some missing citations in the related work section, most notably "On optimism in model based reinforcement learning" (using value optimism in model based RL and deep RL), "Efficient model based RL through optimistic policy search and planning"(optimism and GPs in model based RL), and also SUNRISE which looks awfully related to BEBU-UCB.
 
 We thank the reviewer's suggestion on the related model-based methods. We highlight that our work is model-free, which is relevant though parallel to the model-based optimistic approaches. The main difference is that our work estimates an optimistic Q-function to guide exploration. In contrast, the model-based approach typically estimates a confidence set of transitions, and choose the transition optimistically from the confidence set at each iteration for planning and exploration. We revise our Related Works (Section 4) to include a discussion on model-based approaches with optimism.
@@ -166,19 +185,19 @@ We thank the reviewer's suggestion on the related model-based methods. We highli
 
 SUNRISE (Lee et al., 2020) nicely extends Bootstrapped DQN (Osband et al, 2016) and UCB exploration (Chen et al. 2017) to continuous control through confidence reward and weighted Bellman backup. We have compared with Chen et al. (2017) with backward update in experiments. Moreover, OEB3 is also promising to be extended in continuous control by following the implementation of SUNRISE. We leave this extension in future research. We have added this reference in the revised paper. 
 
-## 2. On the massive computing resources
+**2. On the massive computing resources**
 
 > The experimental results of this work are strong. It is nevertheless unclear how much of these results are the consequence of accessibility to massive computing resources.
 
 We would like to clarify that as far as we are concerned, our performance comparison seems to be fair in terms of the computational resources for the following reasons. (1) In the experiments, we do not use distributed architecture for OEB3 and other baselines. We conduct experiments on all the exploration methods on the same machine with one RTX-2080Ti GPU per task. (2) We compare the performance of OEB3, BEBU, BEBU-UCB, and BEBU-IDS by training them with the same number of training frames (20M frames), which guarantees a fair comparison in terms of exploration. 
 
-## 3. On the algorithm boxes for the different methods
+**3. On the algorithm boxes for the different methods**
 
 >  It would also be very useful to have algorithm boxes for the different methods or method templates that the authors describe in the text. It is hard to follow what they intended to say or at least a table listing succinctly in a reader friendly way what the differences are between the different instantiations of the approach (OEB3, BEBU, BEBU-UCB, etc ...).
 
 We thank the reviewer's suggestions on the algorithm boxes for the different methods. We revised the paper to include additional algorithmic descriptions for three baselines (i.e., BEBU, BEBU-UCB, and BEBU-IDS). We use blue color to highlight the difference between baselines. Please refer to Algorithm 3 of Appendix B in the revised manuscript for the details.
 
-# Reply to AnonReviewer 2, Part 2/2
+---
 
 **References**
 
@@ -205,17 +224,19 @@ We thank the reviewer's suggestions on the algorithm boxes for the different met
 [Lee et al, 2020] Lee, K., Laskin, M., Srinivas, A., Abbeel, P. SUNRISE: A simple unified framework for ensemble learning in deep reinforcement learning. arXiv preprint arXiv:2007.04938. 2020
 
 
-# Reply to AnonReviewer 3, Part 1/2
+---
+
+# Reply to AnonReviewer 3
 
 We appreciate the valuable review and suggestions. We have revised our work accordingly. In what follows, we address the concerns in detail.
 
-## 1. On the unclear statement
+**1. On the unclear statement**
 
 > However, it may be miss-leading to say that OEB3 outperforms all existing bonus-based methods since it actually performs worse than some prior methods in Montezuma’s Revenge.
 
 We agree with the reviewer that the statement "outperforms existing bonus-based methods" is inaccurate. We change it to "outperforms several strong bonus-based methods evaluated by the mean and median score of 49 Atari games." Here the bonus-based methods refers to the count-based and curiosity-driven approaches. We refer to Section 1 for a detailed comparison.
 
-## 2. Different heads are learned using same samples
+**2. Different heads are learned using same samples**
 
 > The paper claims to use bootstrapped Q-learning, but in the algorithm description, at each time only one episode E is sampled for all head. This is different from the original bootstrapped Q-learning design where different heads are learned using different samples with bootstrap. Are there some steps missing in the algorithm description or no bootstrapped samples are used? If all heads are learned from the same sample, does the diversity among different heads only depend on their initialization?
 
@@ -224,7 +245,7 @@ Despite the fact that Bootstrapped DQN is proposed to train each head with indep
 "In this setting all network heads share all the data, so they are not actually a traditional bootstrap at all. ... We have several theories for why the networks maintain significant diversity even without data bootstrapping in this setting. ... First, they all train on dierent target networks. This means that even when facing the same $(s, a, r, s')$ datapoint this can still lead to drastically dierent $Q$-value updates. Second, Atari is a deterministic environment, any transition observation is the unique correct datapoint for this setting. Third, the networks are deep and initialized from dierent random values so they will likely find quite diverse generalization even when they agree on given data. Finally, since all variants of DQN take many many frames to update their policy, it is likely that 
 even using $p = 0.5$ they would still populate their replay memory with identical datapoints. This means using $p = 1$ to save on minibatch passes seems like a reasonable compromise and it doesn’t seem to negatively aect performance too much in this setting."
 
-## 3. Majority-vote evaluation
+**3. Majority-vote evaluation**
 
 > In training, the action is selected by randomly picking a head, i.e. the Thompson sampling approach. However, in evaluation the action seems to be selected by majority vote. Is there a reason for this difference in training and evaluation? Does random sampling help exploration in training?
 
@@ -232,9 +253,9 @@ We remark that the majority-vote approach for evaluation follows the same evalua
 
 Meanwhile, we do not use the majority-vote policy in training for several reasons. (a) A purely exploitative policy prevent the agents from effectively exploring the environment. In contrast, different Q-functions from different Q-heads allows the agent to explore the environment efficiently. (b) By following a single head in an episode, the agent can perform temporally-extended exploration. We revised our paper accordingly to add the details in section 5.1.
 
-# Reply to AnonReviewer 3, Part 2/2
+---
 
-## 4. $\epsilon$-greedy in OEB3
+**4. $\epsilon$-greedy in OEB3**
 
 > In algorithm description, epsilon-greedy is actually used in OEB3 during training. The use of epsilon-greedy is different from other exploration methods which guide exploration by bonus or other randomness. Why does OEB3 need epsilon-greedy given its exploration bonus design? In experiments, do other baselines also use epsilon-greedy?
 
@@ -252,18 +273,19 @@ In terms of the theory, we highlight that the $\epsilon$-greedy in place of gree
 
 [Nikolov et al, 2019] Nikolov, N., Kirschner, J., Berkenkamp, F., Krause, A. Information-Directed Exploration for Deep Reinforcement Learning. International Conference on Learning Representations. 2019
 
+---
 
-# Reply to AnonReviewer 1, Part 1/2
+# Reply to AnonReviewer 1
 
 We appreciate the valuable review and suggestions. We have revised our work accordingly. In what follows, we address your concerns in detail.
 
-## 1. The setting of $\gamma$
+**1. The setting of $\gamma$**
 
 >  First, the actor-value function Q is the expected cumulative reward with discounted factor \gamma. However, it is usually set 0<\gamma<1 for infinite-horizon MDP and set \gamma=1 for episodic MDP or finite-horizon MDP. Besides, the LSVI algorithm also set \gamma=1, and it seems strange that there is a discounted factor \gamma in the OEB3 algorithm.
 
 We set $\gamma=0.99$ in our experiment for several empirical considerations. (1) Using $\gamma<1$ is a standard setup in the implementation of deep RL algorithms to ensure empirical performances, even for episodic MDPs. For example, the value-based methods such as DQN (Mnih et al., 2015, Pages 6), bootstrapped DQN (Osband et al., 2016, Appendix D.2), IDS (Nikolov et al., 2019, Appendix A) all set $\gamma=0.99$ in Atari games. The policy-gradient methods such as DDPG (Lillicrap et al., 2016, section 7), TD3 (Fujimoto et al., 2018, Table 3), and PPO (Schulman et al., 2017, Appendix A) also set $\gamma=0.99$ in Mujoco tasks. (2) Although Atari is an episodic task in our experiment, the episodic length is relatively long, typically with hundreds of steps. Using $\gamma<1$ ensures that the value functions are bounded, which improves the empirical performance of the algorithms.
 
-## 2. $\epsilon$-greedy in OEB3
+**2. $\epsilon$-greedy in OEB3**
 
 >  Second, in the LSVI algorithm, the agent chooses action by the totally greedy policy with the state-actor value function. In the OEB3 algorithm, the agent chooses action by the \epsilon-greedy policy. Even the optimistic exploration bonus in the OEB3 algorithm is the same as the LSVI algorithm under the linear MDP setting, theoretic proof of LSVI may not support the OEB3 algorithm.
 
@@ -271,9 +293,9 @@ $\epsilon$-greedy in OEB3. We adopt $\epsilon$-greedy for the empirical performa
 
 In terms of the theory, we highlight that the $\epsilon$-greedy in place of greedy will hinder the performance difference term $\langle \pi^k, Q^* - Q^{k} \rangle$, which is upper bounded by zero if $\pi^k$ is the greedy policy corresponding to $Q^k$. In contrast, if $\pi^k$ is the $\epsilon$-greedy policy, adding and subtracting the greedy policy yields an $\epsilon Q_{\max}$ upper bound, which propagates to an additional $O(\epsilon T)$ term in the regret. Therefore, if $\epsilon$ is sufficiently small, the algorithm attains the optimal $\sqrt{T}$-regret. We remark that in our experiments, the $\epsilon$-term diminishes to zero, which does not incur a large bias to the regret of greedy policy.
 
-# Reply to AnonReviewer 1, Part 2/2
+---
 
-## 3. The action-space of experiments
+**3. The action-space of experiments**
 
 >  Finally, in the experiment, it seems that the action space is relatively small. It is better to do more experiments with a broader action set and show the OEB3 algorithm's performance in those experiments.
 
@@ -300,6 +322,7 @@ In continuous control tasks, SUNRISE (Lee et al, 2020) is an extension of Bootst
 
 [Lee et al, 2020] Lee, K., Laskin, M., Srinivas, A., Abbeel, P. SUNRISE: A simple unified framework for ensemble learning in deep reinforcement learning. arXiv preprint arXiv:2007.04938. 2020
 
+----
 
 # Reply to AnonReviewer 4
 
