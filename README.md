@@ -300,7 +300,7 @@ Note that our methods, Optimistic LSVI, and Bootstrapped DQN, are all frequentis
 In addition, note that our analysis exploits the Gaussian likelihood of the target given the state, action, and parameter of the value function, which serves only for the motivation. Hence, as long as such a Gaussian likelihood holds, (for instance, such a likelihood holds for the Gaussian rewards and transitions with linear function approximations), the result in Theorem 2 still holds. On the other hand, the Gaussian assumption in transitions holds in the study of LQR. We refer to Kakade, S. et al. (2020) for a rigorous investigation for such a setting. 
 
 
-References
+**References**
 
 [Friedman J. et al. 2001] Jerome Friedman, Trevor Hastie and Robert Tibshirani. The elements of statistical learning. Springer series in statistics New York, 2001.
 
