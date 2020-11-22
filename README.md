@@ -3,12 +3,12 @@
 We thank the reviewers for their comprehensive and thoughtful comments. We carefully revised our submission based on the reviews, and hope the revisions address the reviewers' concerns.
 
 In the updated manuscript we have made the following changes:
-- We modified the definition of preemptive robustness to include preserving the ground-truth labels to make the usage of the related terms (e.g. safe spot) more consistent. (Section 3.1, 3.2)
+- We added the detailed discussion of the difference between OEB3 and Chen et al (2017), EBU (Lee et. al. 2019)
 - We specified on each of our methods whether they use the ground-truth labels or the predicted labels. We also included the rationale behind these assumptions more clearly. (Section 3.2, 3.5, 3.6)
 - We added a more detailed explanation of our safe spot-aware training method. (Section 3.5)
 - We tuned the learning rate for safe spot search on OOD detection and updated our OOD results (Section 4.4).
 
-# Reply to AnonReviewer 5, Part 1/5
+---
 
 We appreciate the valuable suggestions and typos spotted by the reviewers. We have revised our work accordingly. We refer to table for a summary of comparisons in our rebuttal. In what follows, we address the concerns in detail.
 
@@ -23,7 +23,7 @@ UBE (O'Donoghue et al. 2018)               | Closed form     | On-trajectory upd
 Bayesian-DQN (Azizzadenesheli et al. 2018) | Closed form     | On-trajectory update | Posterior sampling
 
 
-## 1. On the presentation of this paper.
+**1. On the presentation of this paper.**
 
 >  The uncertainty estimation strategy is as proposed by Chen et. al. 2019, but the presentation seems to suggest it is novel. While Chen et. al. 2019 do not propose to “propagate” it during bootstrap as well, the bonus computed is the straightforward empirical standard deviation, as proposed by them. 
 
@@ -39,7 +39,7 @@ Bayesian-DQN (Azizzadenesheli et al. 2018) | Closed form     | On-trajectory upd
 
 In addition, we highlight that Bootstrapped DQN is a non-parametric bootstrapped approach, which is a frequentist approach to construct the confidence interval of value functions. The output of such an approach coincides with the posterior under a Bayesian setting where the prior is uninformative (Friedman J. et al. 2001). In contrast, Optimistic LSVI constructs the confidence interval explicitly based on the linear model, which can be recovered by various bootstrap approaches such as the parametric bootstrap approach. Both Bootstrapped DQN and Optimistic LSVI construct valid confidence intervals for the value functions. In our approach, to fit in deep neural network parameterization, we adopt Bootstrapped DQN to calculate the standard deviation of Q-functions, which coincides with the bonus in Optimistic LSVI on the linear models. 
 
-# Reply to AnonReviewer 5, Part 2/5
+---
 
 > BEBU is essentially EBU as proposed in Lee et. al. 2019 with bonuses added. I do not think the text presents it so. 
 
@@ -53,7 +53,7 @@ In addition, we highlight that our contribution also includes the extension of b
 - In each training step of optimistic-LSVI, all historical samples are utilized to update the weight of Q-function and calculate the confidence bonus. While in OEB3, we use samples from a batch of episodic trajectories from the replay buffer in each training step. Such a difference in implementation is imposed to achieve computational efficiency. 
 - In OEB3, the target-network has a relatively low update frequency, whereas, in Optimistic LSVI, the target Q function is updated in each iteration. We highlight that such implementation techniques are commonly used in most existing (off-policy) Deep RL algorithms, including DQN, BootDQN, DDPG, SAC. We revised the manuscript accordingly and highlight such differences between optimistic LSVI and OEB3 at the end of section 3.2.
 
-## 2. On the discussion and empirical comparison on two related works (O'Donoghue et al. 2019 and Azizzadenesheli et al. 2018).
+**2. On the discussion and empirical comparison on two related works (O'Donoghue et al. 2019 and Azizzadenesheli et al. 2018).**
 
 > I think they need to be discussed and compared against (a) Bayesian Deep Q-Networks (b) Uncertainty Bellman Equation
 
@@ -64,13 +64,13 @@ and briefly discuss these works in the sequel. We refer to the table for a summa
 
 Empirically, the UBE is evaluated by the whole Atari suit in the original paper. Since there is no released code from O'Donoghue et al. (2018), we directly adopt the scores reported in this paper. The mean and median evaluated score with 200M frames in Atari suit is 439.88\% and 126.41\%, respectively. Comparatively, the three baselines used in our paper (i.e., BootDQN, NoisyNet and BootDQN-IDS) achieves (mean, median) scores as (553\%, 128\%), (651\%, 172\%), and (757\%, 187\%), respectively. The three baselines in our paper outperform UBE. We refer to Table 1 in the revised manuscript for the comparisons. 
 
-# Reply to AnonReviewer 5, Part 3/5
+----
 
 (2) Bayesian-DQN (Azizzadenesheli et al. 2018) modifies the linear regression of the last layer in Q-network and uses Bayesian Linear Regression (BLR) instead, which estimates an approximated posterior of the Q-function. When interacting with the environment, Bayesian-DQN uses Thompson Sampling on the posterior to capture the uncertainty of Q-estimates. Our method is different from Bayesian-DQN in several aspects. (a) Bayesian-DQN does not propagate the uncertainty, which cannot perform deep exploration for MDPs. (b) OEB3 uses a bootstrapped Q-learning to calculate a bootstrapped distribution of Q-function, while Bayesian-DQN uses a parametric Gaussian BLR to update the posterior. (c) OEB3 is more computationally efficient because the Bayesian-DQN needs to calculate the inverse of a high dimensional matrix (512*512 in Atari) when updating the posterior. 
 
 Empirically, since Bayesian-DQN is not evaluated in the whole Atari suit, we adopt the official release code in https://github.com/kazizzad/BDQN-MxNet-Gluon and make two modification for a fair comparison. First, we add the 30 no-op evaluation mechanism, which we use to evaluate OEB3 and other baselines in our work. Second, we set the frame-skip to 4 to be consistent with our baselines. We remark that inconsistency in the comparison might still exist since the original implementation of Bayesian-DQN is based on MX-Net Library, while OEB3 and other baselines are implemented with Tensorflow. We release the modified code in https://github.com/review-anon/Bayesian-DQN. We completed one-seed's training in 49 Atari games for 20M training frames by our submission of this rebuttal. The mean and median of evaluated scores are 216\% and 24\%, while OEB3 obtains mean and median at 765\% and 50\%. We will complete the experiments of Bayesian-DQN for more seeds and add the results of the comparison in the future revisions. 
 
-## 3. On the unclear proposals.
+**3. On the unclear proposals.**
 
 > bonus in bootstrap target - different from LSVI-UCB
 
@@ -86,9 +86,9 @@ In terms of the theory, we highlight that the $\epsilon$-greedy in place of gree
 
 (3) Computation of $\tilde{\mathcal{B}}^k$. We compute the target bonus $\tilde{\mathcal{B}}^k$ by the empirical standard deviation of the target network ensembles. We refer to Section 3.2 for a revised explanation for the computation.
 
-# Reply to AnonReviewer 5, Part 4/5
+----
 
-## 4. On clarifications to the empirical setup.
+**4. On clarifications to the empirical setup.**
 
 > Is it 1M trajectories or 1M samples
 
@@ -102,27 +102,27 @@ In terms of the theory, we highlight that the $\epsilon$-greedy in place of gree
 
 (3) The magnitude of $\alpha_1$ and $\alpha_2$. We perform a hyper-parameter search of $\alpha_1$ and $\alpha_2$ on five popular tasks, including Breakout, Freeway, Qbert, Seaquest, and SpaceInvaders. Our current setting is the best choice on average. The value is relatively small to suit the backward update in training empirically. If the parameters $\alpha_1$ and $\alpha_2$ are large, then the large bonus accumulates along with the training process, eventually resulting in a large Q-value at the beginning of the episode and affecting the convergence of Q-learning. Meanwhile, we remark that the episodes are relatively long in Atari (which typically consist of hundreds of steps). Therefore, a small weight typically yields better performance empirically. 
 
-## 5. On the coverage of $Q^*$. 
+**5. On the coverage of $Q^*$.**
 
 > I understand the bonus proposed is an empirical surrogate to promote optimistic values — but ideally, do we not need optimistic values that include q*. What is the guarantee that q^* is included in the set (as it seems to be for the example in Figure 1)
 
 We highlight that Optimistic LSVI intrinsically captures the model uncertainty, which covers the true transition $P^*$. Such coverage is implicitly reflected by the value functions (as we do not estimate the transition model directly). Since the model uncertainty covers $P^*$, the value functions obtained after planning in our algorithm covers $Q^*$. In addition, the nonnegative bonus guarantees that the estimated $Q$-function is larger than $Q^*$. Meanwhile, the UCB bonus shrinks to zero as we observe more samples. We verify such a fact empirically in our experiments, suggesting that the estimated $Q$-function eventually converges to the optimum. Specifically, In Figure 3, we record the the mean of UCB-bonus of the training batch in the learning process. As more experiences of states and actions are gathered, the mean UCB-bonus reduces gradually, which indicates that the bootstrapped value functions concentrate around the optimal value and the epistemic uncertainty decreases. The optimistic Q-value gradually converges to optimal Q-value in exploration.
 
-## 6. On the key advantage of the proposed approach and its scalability. 
+**6. On the key advantage of the proposed approach and its scalability.**
 
 > What do you see are the key advantages of the proposed approach? Is scalability by constraining learning to be at the episode level an issue in practical applications? 
 
 The key advantage of OEB3 is the optimism for exploration, which improves the sample efficiency of Q-learning. More importantly, motivated by the theoretic findings, we propose to propagate the bonus through time by backward update, which allows for deep exploration in MDPs, and leads to better empirical performances than the baselines. When handling non-episodic problems, a simple and efficient remedy is to cut the long sequence into several episodic experiences (with a proper handling of the cut-offs). This technique is often used in real-world applications with non-episodic setting, such as self-driving cars. As discussed in a recent survey (Kiran et al. 2020), using DRL method in self-driving needs to manually define the episode length with a finite horizon. 
 
-## 7. Performance on Montezuma's revenge. 
+**7. Performance on Montezuma's revenge.** 
 
 > It is surprising that OEB3 is poorer that Bootstrap DQN in Montezuma’s revenge
 
 The score of 100 is reported in Osband et al. (2016), which we believe is prone to implementation. We use another popular bootstrapped-DQN implementation at https://github.com/nikonikolov/rltf and trains the policy for 200M frames, which scores zero on Montezuma's revenge.  In our released code at https://github.com/review-anon/OEB3 (run without --BEBU and --reward-type to train a bootstrapped-DQN agent), the final results is also zero. Also, the score of 100 is relatively low, which does not indicate successful learning in Montezuma's revenge (scoring 100 indicates that the player does not pass the first room successfully). In contrast, the bonus-based methods achieve significantly higher scores in Montezuma's revenge. As a result, both OEB3 and Bootstrapped DQN performs poorly in such a task. We refer to Appendix H for the failure analysis.
 
-# Reply to AnonReviewer 5, Part 5/5
+----
 
-## 8. On a clarification to the figures. 
+**8. On a clarification to the figures.**
 
 > Presumably Figures 2 and 3 are bonuses during learning — but a phrase in Section 5.2 says “trained OEB3”.
 
