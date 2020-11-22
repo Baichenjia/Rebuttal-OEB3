@@ -1,3 +1,13 @@
+# Summary of revision
+
+We thank the reviewers for their comprehensive and thoughtful comments. We carefully revised our submission based on the reviews, and hope the revisions address the reviewers' concerns.
+
+In the updated manuscript we have made the following changes:
+- We modified the definition of preemptive robustness to include preserving the ground-truth labels to make the usage of the related terms (e.g. safe spot) more consistent. (Section 3.1, 3.2)
+- We specified on each of our methods whether they use the ground-truth labels or the predicted labels. We also included the rationale behind these assumptions more clearly. (Section 3.2, 3.5, 3.6)
+- We added a more detailed explanation of our safe spot-aware training method. (Section 3.5)
+- We tuned the learning rate for safe spot search on OOD detection and updated our OOD results (Section 4.4).
+
 # Reply to AnonReviewer 5, Part 1/5
 
 We appreciate the valuable suggestions and typos spotted by the reviewers. We have revised our work accordingly. We refer to table for a summary of comparisons in our rebuttal. In what follows, we address the concerns in detail.
