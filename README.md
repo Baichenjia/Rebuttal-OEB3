@@ -162,7 +162,7 @@ SUNRISE (Lee et al., 2020) nicely extends Bootstrapped DQN (Osband et al, 2016) 
 
 We would like to clarify that as far as we are concerned, our performance comparison seems to be fair in terms of the computational resources for the following reasons. (1) In the experiments, we do not use distributed architecture for OEB3 and other baselines. We conduct experiments on all the exploration methods on the same machine with one RTX-2080Ti GPU per task. (2) We compare the performance of OEB3, BEBU, BEBU-UCB, and BEBU-IDS by training them with the same number of training frames (20M frames), which guarantees a fair comparison in terms of exploration. 
 
-## 2. On the algorithm boxes for the different methods
+## 3. On the algorithm boxes for the different methods
 
 >  It would also be very useful to have algorithm boxes for the different methods or method templates that the authors describe in the text. It is hard to follow what they intended to say or at least a table listing succinctly in a reader friendly way what the differences are between the different instantiations of the approach (OEB3, BEBU, BEBU-UCB, etc ...).
 
