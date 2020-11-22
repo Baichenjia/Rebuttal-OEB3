@@ -7,7 +7,7 @@ In the updated manuscript we have made the following main changes:
 - We added the discussion of adjustments in OEB3 compared to optimistic-LSVI (Jin et al, 2020) (Section 3.2).
 - We added the comparison of OEB3 and EBU (Lee et al, 2019) (Section 3.2).
 - We added theoretical and empirical comparison of Uncertainty Bellman Equation and Exploration (O'Donoghue et al. 2018) and Bayesian-DQN (Azizzadenesheli et al.  2018) (Section 4 and Section 5.2).
-- We added the related works of model-based approaches1 with optimism. (Section 4).
+- We added the related works of model-based approaches with optimism. (Section 4).
 - We added additional algorithmic descriptions for three baselines (i.e., BEBU, BEBU-UCB, and BEBU-IDS). (Appendix B).
 
 **References**
