@@ -53,7 +53,9 @@ Bayesian-DQN (Azizzadenesheli et al. 2018) | Closed form     | On-trajectory upd
 - The method proposed by Chen et al. (2017) does not propagate the uncertainty through time. In contrast, our approach propagates the uncertainty through time by the backward update, which allows for deep exploration for the MDPs. 
 - The method proposed by Chen et al. (2017) does not use the bonus in the update of Q-functions. The bonus is computed when taking the actions. In contrast, we compute the UCB-bonus for the update of Q-function instead of action selection. Hence, our algorithm is more computationally efficient, as the number of steps $L_1$ in exploration is typically larger than the number of steps $L_2$ for the update of Q-functions. (e.g., in our experiments, we set $L_1 > 4L_2$). 
 - As a result of the above reasons, our proposed OEB3 outperforms Chen et al. (2017) with BEBU evaluated by 49 Atari games. 
-- In addition, our work establishes a theoretical connection between the proposed UCB-bonus $\rm{std}(Q)$ and the bonus-term $[\phi_t^\top\Lambda_t^{-1}\phi_t]^{\frac{1}{2}}$ in optimistic-LSVI that achieves a near-optimal worst-case regret, which motivates the design of OEB3. We revised the manuscript to add this discussion in Section 4.
+- In addition, our work establishes a theoretical connection between the proposed UCB-bonus $\rm{std}(Q)$ and the bonus-term $[\phi_t^\top\Lambda_t^{-1}\phi_t]^{\frac{1}{2}}$ in optimistic-LSVI that achieves a near-optimal worst-case regret, which motivates the design of OEB3. 
+
+We revised the manuscript to add this discussion in Section 4.
 
 > The informal Theorem 1 I think are well known in that the bonus used by UCB algorithms for linear regression is proportional to the posterior variance of bayesian linear regression. Further, LSVI-UCB is a frequentist solution approach and bootstrap DQN a non-parametric Bayesian approach — combining the two definitely warrants some discussion.
 
