@@ -12,15 +12,15 @@ In the updated manuscript we have made the following main changes:
 
 **References**
 
-[Chen et al. 2017] Richard Y Chen,  Szymon Sidor,  Pieter Abbeel,  and John Schulman.   UCB Exploration via164Q-Ensembles. arXiv preprint arXiv:1706.01502, 2017
+[Chen et al. 2017] Richard Y Chen, Szymon Sidor,  Pieter Abbeel,  and John Schulman. UCB Exploration via Q-Ensembles. arXiv preprint arXiv:1706.01502, 2017
 
-[Jin et al.  2020] Chi Jin, Zhuoran Yang, Zhaoran Wang, and Michael I Jordan.  Provably Efficient Reinforcement178Learning with Linear Function Approximation. In Proceedings of Thirty Third Conference on Learning Theory. 2020
+[Jin et al.  2020] Chi Jin, Zhuoran Yang, Zhaoran Wang, and Michael I Jordan. Provably Efficient Reinforcement Learning with Linear Function Approximation. In Proceedings of Thirty Third Conference on Learning Theory. 2020
 
-[Lee et al. 2019] Su Young Lee, Choi Sungik, and Sae-Young Chung. Sample-Efficient Deep Reinforcement Learning166via Episodic Backward Update. Advances in Neural Information Processing Systems, 2019
+[Lee et al. 2019] Su Young Lee, Choi Sungik, and Sae-Young Chung. Sample-Efficient Deep Reinforcement Learning via Episodic Backward Update. Advances in Neural Information Processing Systems, 2019
 
-[O’Donoghue et al. 2018] Brendan O’Donoghue, Ian Osband, Remi Munos and V. Mnih. The Uncertainty Bellman168Equation and Exploration. International Conference of Machine Learning. 2018
+[O’Donoghue et al. 2018] Brendan O’Donoghue, Ian Osband, Remi Munos and V. Mnih. The Uncertainty Bellman Equation and Exploration. International Conference of Machine Learning. 2018
 
-[Azizzadenesheli et al. 2018] Kamyar Azizzadenesheli, Emma Brunskill, and Anima Anandkumar. Efficient Exploration170through Bayesian Deep Q-Networks. Information Theory and Applications Workshop (ITA). 2018
+[Azizzadenesheli et al. 2018] Kamyar Azizzadenesheli, Emma Brunskill, and Anima Anandkumar. Efficient Exploration through Bayesian Deep Q-Networks. Information Theory and Applications Workshop (ITA). 2018
 
 ---
 
