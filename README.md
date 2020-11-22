@@ -13,7 +13,7 @@ UBE (O'Donoghue et al. 2018)               | Closed form     | On-trajectory upd
 Bayesian-DQN (Azizzadenesheli et al. 2018) | Closed form     | On-trajectory update | Posterior sampling
 
 
-**1. On the presentation of this paper.**
+## 1. On the presentation of this paper.
 
 >  The uncertainty estimation strategy is as proposed by Chen et. al. 2019, but the presentation seems to suggest it is novel. While Chen et. al. 2019 do not propose to “propagate” it during bootstrap as well, the bonus computed is the straightforward empirical standard deviation, as proposed by them. 
 
@@ -43,7 +43,7 @@ In addition, we highlight that our contribution also includes the extension of b
 - In each training step of optimistic-LSVI, all historical samples are utilized to update the weight of Q-function and calculate the confidence bonus. While in OEB3, we use samples from a batch of episodic trajectories from the replay buffer in each training step. Such a difference in implementation is imposed to achieve computational efficiency. 
 - In OEB3, the target-network has a relatively low update frequency, whereas, in Optimistic LSVI, the target Q function is updated in each iteration. We highlight that such implementation techniques are commonly used in most existing (off-policy) Deep RL algorithms, including DQN, BootDQN, DDPG, SAC. We revised the manuscript accordingly and highlight such differences between optimistic LSVI and OEB3 at the end of section 3.2.
 
-**2. On the discussion and empirical comparison on two related works (O'Donoghue et al. 2019 and Azizzadenesheli et al. 2018).**
+## 2. On the discussion and empirical comparison on two related works (O'Donoghue et al. 2019 and Azizzadenesheli et al. 2018).
 
 > I think they need to be discussed and compared against (a) Bayesian Deep Q-Networks (b) Uncertainty Bellman Equation
 
@@ -60,7 +60,7 @@ Empirically, the UBE is evaluated by the whole Atari suit in the original paper.
 
 Empirically, since Bayesian-DQN is not evaluated in the whole Atari suit, we adopt the official release code in https://github.com/kazizzad/BDQN-MxNet-Gluon and make two modification for a fair comparison. First, we add the 30 no-op evaluation mechanism, which we use to evaluate OEB3 and other baselines in our work. Second, we set the frame-skip to 4 to be consistent with our baselines. We remark that inconsistency in the comparison might still exist since the original implementation of Bayesian-DQN is based on MX-Net Library, while OEB3 and other baselines are implemented with Tensorflow. We release the modified code in https://github.com/review-anon/Bayesian-DQN. We completed one-seed's training in 49 Atari games for 20M training frames by our submission of this rebuttal. The mean and median of evaluated scores are 216\% and 24\%, while OEB3 obtains mean and median at 765\% and 50\%. We will complete the experiments of Bayesian-DQN for more seeds and add the results of the comparison in the future revisions. 
 
-**3. On the unclear proposals.**
+## 3. On the unclear proposals.
 
 > bonus in bootstrap target - different from LSVI-UCB
 
@@ -78,7 +78,7 @@ In terms of the theory, we highlight that the $\epsilon$-greedy in place of gree
 
 # Reply to AnonReviewer 5, Part 4/5
 
-**4. On clarifications to the empirical setup.**
+## 4. On clarifications to the empirical setup.**
 
 > Is it 1M trajectories or 1M samples
 
@@ -94,21 +94,29 @@ In terms of the theory, we highlight that the $\epsilon$-greedy in place of gree
 
 > I understand the bonus proposed is an empirical surrogate to promote optimistic values — but ideally, do we not need optimistic values that include q*. What is the guarantee that q^* is included in the set (as it seems to be for the example in Figure 1)
 
-**5. On the coverage of $Q^*$**. We highlight that Optimistic LSVI intrinsically captures the model uncertainty, which covers the true transition $P^*$. Such coverage is implicitly reflected by the value functions (as we do not estimate the transition model directly). Since the model uncertainty covers $P^*$, the value functions obtained after planning in our algorithm covers $Q^*$. In addition, the nonnegative bonus guarantees that the estimated $Q$-function is larger than $Q^*$. Meanwhile, the UCB bonus shrinks to zero as we observe more samples. We verify such a fact empirically in our experiments, suggesting that the estimated $Q$-function eventually converges to the optimum. Specifically, In Figure 3, we record the the mean of UCB-bonus of the training batch in the learning process. As more experiences of states and actions are gathered, the mean UCB-bonus reduces gradually, which indicates that the bootstrapped value functions concentrate around the optimal value and the epistemic uncertainty decreases. The optimistic Q-value gradually converges to optimal Q-value in exploration.
+## 5. On the coverage of $Q^*$. 
+
+We highlight that Optimistic LSVI intrinsically captures the model uncertainty, which covers the true transition $P^*$. Such coverage is implicitly reflected by the value functions (as we do not estimate the transition model directly). Since the model uncertainty covers $P^*$, the value functions obtained after planning in our algorithm covers $Q^*$. In addition, the nonnegative bonus guarantees that the estimated $Q$-function is larger than $Q^*$. Meanwhile, the UCB bonus shrinks to zero as we observe more samples. We verify such a fact empirically in our experiments, suggesting that the estimated $Q$-function eventually converges to the optimum. Specifically, In Figure 3, we record the the mean of UCB-bonus of the training batch in the learning process. As more experiences of states and actions are gathered, the mean UCB-bonus reduces gradually, which indicates that the bootstrapped value functions concentrate around the optimal value and the epistemic uncertainty decreases. The optimistic Q-value gradually converges to optimal Q-value in exploration.
 
 > What do you see are the key advantages of the proposed approach? Is scalability by constraining learning to be at the episode level an issue in practical applications? 
 
-**6. On the key advantage of the proposed approach and its scalability.** The key advantage of OEB3 is the optimism for exploration, which improves the sample efficiency of Q-learning. More importantly, motivated by the theoretic findings, we propose to propagate the bonus through time by backward update, which allows for deep exploration in MDPs, and leads to better empirical performances than the baselines. When handling non-episodic problems, a simple and efficient remedy is to cut the long sequence into several episodic experiences (with a proper handling of the cut-offs). This technique is often used in real-world applications with non-episodic setting, such as self-driving cars. As discussed in a recent survey (Kiran et al. 2020), using DRL method in self-driving needs to manually define the episode length with a finite horizon. 
+## 6. On the key advantage of the proposed approach and its scalability. 
+
+The key advantage of OEB3 is the optimism for exploration, which improves the sample efficiency of Q-learning. More importantly, motivated by the theoretic findings, we propose to propagate the bonus through time by backward update, which allows for deep exploration in MDPs, and leads to better empirical performances than the baselines. When handling non-episodic problems, a simple and efficient remedy is to cut the long sequence into several episodic experiences (with a proper handling of the cut-offs). This technique is often used in real-world applications with non-episodic setting, such as self-driving cars. As discussed in a recent survey (Kiran et al. 2020), using DRL method in self-driving needs to manually define the episode length with a finite horizon. 
 
 > It is surprising that OEB3 is poorer that Bootstrap DQN in Montezuma’s revenge
 
-**7. Performance on Montezuma's revenge.** The score of 100 is reported in Osband et al. (2016), which we believe is prone to implementation. We use another popular bootstrapped-DQN implementation at https://github.com/nikonikolov/rltf and trains the policy for 200M frames, which scores zero on Montezuma's revenge.  In our released code at https://github.com/review-anon/OEB3 (run without --BEBU and --reward-type to train a bootstrapped-DQN agent), the final results is also zero. Also, the score of 100 is relatively low, which does not indicate successful learning in Montezuma's revenge (scoring 100 indicates that the player does not pass the first room successfully). In contrast, the bonus-based methods achieve significantly higher scores in Montezuma's revenge. As a result, both OEB3 and Bootstrapped DQN performs poorly in such a task. We refer to Appendix H for the failure analysis.
+## 7. Performance on Montezuma's revenge. 
+
+The score of 100 is reported in Osband et al. (2016), which we believe is prone to implementation. We use another popular bootstrapped-DQN implementation at https://github.com/nikonikolov/rltf and trains the policy for 200M frames, which scores zero on Montezuma's revenge.  In our released code at https://github.com/review-anon/OEB3 (run without --BEBU and --reward-type to train a bootstrapped-DQN agent), the final results is also zero. Also, the score of 100 is relatively low, which does not indicate successful learning in Montezuma's revenge (scoring 100 indicates that the player does not pass the first room successfully). In contrast, the bonus-based methods achieve significantly higher scores in Montezuma's revenge. As a result, both OEB3 and Bootstrapped DQN performs poorly in such a task. We refer to Appendix H for the failure analysis.
 
 # Reply to AnonReviewer 5, Part 5/5
 
 > Presumably Figures 2 and 3 are bonuses during learning — but a phrase in Section 5.2 says “trained OEB3”.
 
-**8. On a clarification to the figures.** In figure 2, we use a trained OEB3 agent to interact with the environment for an episode and record the UCB-bonuses at each step. In Figure 3, we record the mean of bonuses along the training process. We revised our work and added detailed descriptions to the figures.
+## 8. On a clarification to the figures. 
+
+In figure 2, we use a trained OEB3 agent to interact with the environment for an episode and record the UCB-bonuses at each step. In Figure 3, we record the mean of bonuses along the training process. We revised our work and added detailed descriptions to the figures.
 
 ----
 
