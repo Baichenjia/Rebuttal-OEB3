@@ -144,8 +144,6 @@ The score of 100 is reported in Osband et al. (2016), which we believe is prone 
 
 In figure 2, we use a trained OEB3 agent to interact with the environment for an episode and record the UCB-bonuses at each step. In Figure 3, we record the mean of bonuses along the training process. We revised our work and added detailed descriptions to the figures.
 
-----
-
 **References**
 
 [Friedman J. et al. 2001] Jerome Friedman, Trevor Hastie and Robert Tibshirani. The elements of statistical learning. Springer series in statistics New York, 2001.
