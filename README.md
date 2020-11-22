@@ -78,7 +78,7 @@ In terms of the theory, we highlight that the $\epsilon$-greedy in place of gree
 
 # Reply to AnonReviewer 5, Part 4/5
 
-## 4. On clarifications to the empirical setup.**
+## 4. On clarifications to the empirical setup.
 
 > Is it 1M trajectories or 1M samples
 
