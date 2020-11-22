@@ -345,4 +345,4 @@ In addition, note that our analysis exploits the Gaussian likelihood of the targ
 
 [Russo, D. 2019] Russo, D. Worst-case regret bounds for exploration via randomized value functions. Advances in Neural Information Processing Systems. 2019.
 
-[Kakade, S. 2020] Kakade, S., Krishnamurthy, A., Lowrey, K., Ohnishi, M., Sun, W. Worst-Case Regret Bounds for Exploration via Randomized Value Functions. Advances in neural information processing systems. 2020.
+[Kakade, S. 2020] Kakade, S., Krishnamurthy, A., Lowrey, K., Ohnishi, M., Sun, W. Information Theoretic Regret Bounds for Online Nonlinear Control. Advances in neural information processing systems. 2020.
