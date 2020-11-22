@@ -3,18 +3,24 @@
 We thank the reviewers for their comprehensive and thoughtful comments. We carefully revised our submission based on the reviews, and hope the revisions address the reviewers' concerns.
 
 In the updated manuscript we have made the following main changes:
-- We added the detailed discussion of the difference between OEB3 and Chen et al (2017) in Related Works (Section 4).
-- We added the discussion of adjustments in OEB3 compared to optimistic-LSVI (Jin et al, 2020) (Section 3.2).
-- We added the comparison of OEB3 and EBU (Lee et al, 2019) (Section 3.2).
-- We added theoretical and empirical comparison of Uncertainty Bellman Equation and Exploration (O'Donoghue et al. 2018) and Bayesian-DQN (Azizzadenesheli et al.  2018) (Section 4 and Section 5.2).
+
+- We added the detailed discussion of the difference between OEB3 and Chen et al (2017) in Related Works. (Section 4).
+
+- We added the discussion of adjustments in OEB3 compared to optimistic-LSVI (Jin et al, 2020) and EBU (Lee et al, 2019). (Section 3.2).
+
+- We added theoretical and empirical comparison of Uncertainty Bellman Equation and Exploration (O'Donoghue et al. 2018) and Bayesian-DQN (Azizzadenesheli et al. 2018). (Section 4 and Section 5.2).
+
 - We added the related works of model-based approaches with optimism. (Section 4).
+
 - We added additional algorithmic descriptions for three baselines (i.e., BEBU, BEBU-UCB, and BEBU-IDS). (Appendix B).
+
+- We added empirical details of bootstrapping data in training and majority-vote in evaluation. (Section 5.1).
 
 **References**
 
 [Chen et al. 2017] Richard Y Chen, Szymon Sidor,  Pieter Abbeel,  and John Schulman. UCB Exploration via Q-Ensembles. arXiv preprint arXiv:1706.01502, 2017
 
-[Jin et al.  2020] Chi Jin, Zhuoran Yang, Zhaoran Wang, and Michael I Jordan. Provably Efficient Reinforcement Learning with Linear Function Approximation. In Proceedings of Thirty Third Conference on Learning Theory. 2020
+[Jin et al. 2020] Chi Jin, Zhuoran Yang, Zhaoran Wang, and Michael I Jordan. Provably Efficient Reinforcement Learning with Linear Function Approximation. In Proceedings of Thirty Third Conference on Learning Theory. 2020
 
 [Lee et al. 2019] Su Young Lee, Choi Sungik, and Sae-Young Chung. Sample-Efficient Deep Reinforcement Learning via Episodic Backward Update. Advances in Neural Information Processing Systems, 2019
 
