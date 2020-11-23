@@ -336,7 +336,7 @@ We appreciate the valuable review and suggestions. We have revised our work acco
 
 Note that our methods, Optimistic LSVI, and Bootstrapped DQN, are all frequentist approaches. The Bootstrapped DQN is connected to the Bayes approach with the uninformative prior (Friedman J. et al. 2001). In our analysis, we use Bayes setting as a simplification to motivate our algorithm. We highlight that our algorithm does not require such a setting. A similar motivation approach also arises in the recent work on the worst-case regret of randomized value function approaches (Russo, D. 2019).
 
-In addition, note that our analysis exploits the Gaussian likelihood of the target given the state, action, and parameter of the value function, which serves only for the motivation. Hence, as long as such a Gaussian likelihood holds, (for instance, such a likelihood holds for the Gaussian rewards and transitions with linear function approximations), the result in Theorem 2 still holds. On the other hand, the Gaussian assumption in transitions holds in the study of LQR. We refer to Kakade, S. et al. (2020) for a rigorous investigation for such a setting. 
+In addition, note that our analysis exploits the Gaussian likelihood of the target given the state, action, and parameter of the value function, which serves only for the motivation. Hence, as long as such a Gaussian likelihood holds, the result in Theorem 2 still holds. As an example, under the Gaussian transition and reward assumption, if we estimates the transition model instead of the value function, a similar result to Theorem 2 holds. On the other hand, the Gaussian assumption in transitions holds in the study of LQR. We refer to Kakade, S. et al. (2020) for a rigorous investigation for such a setting. 
 
 
 **References**
@@ -345,4 +345,5 @@ In addition, note that our analysis exploits the Gaussian likelihood of the targ
 
 [Russo, D. 2019] Russo, D. Worst-case regret bounds for exploration via randomized value functions. Advances in Neural Information Processing Systems. 2019.
 
-[Kakade, S. 2020] Kakade, S., Krishnamurthy, A., Lowrey, K., Ohnishi, M., Sun, W. Worst-Case Regret Bounds for Exploration via Randomized Value Functions. Advances in neural information processing systems. 2020.
+[Kakade, S. 2020] Kakade, S., Krishnamurthy, A., Lowrey, K., Ohnishi, M., Sun, W. Information Theoretic Regret Bounds for Online Nonlinear Control. Advances in neural information processing systems. 2020.
+
